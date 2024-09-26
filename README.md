@@ -1,13 +1,41 @@
-# Sample Hardhat Project
+# My Awesome Token DApp
 
-This project demonstrates a basic Hardhat use case. It comes with a sample contract, a test for that contract, and a Hardhat Ignition module that deploys that contract.
+This project is a decentralized application (DApp) for interacting with an ERC-20 token. 
+The DApp allows users to view their account information, transfer tokens, approve token spending, and check token allowances.
 
-Try running some of the following tasks:
+## Prerequisites
 
-```shell
-npx hardhat help
-npx hardhat test
-REPORT_GAS=true npx hardhat test
-npx hardhat node
-npx hardhat ignition deploy ./ignition/modules/Lock.js
+Before you can run this DApp, you'll need the following:
+
+1. **Node.js** and **npm**
+2. **MetaMask** extension installed in your browser to manage your Ethereum accounts and connect to the DApp.
+
+## Setup Instructions
+
+### 1. Clone the repository
+
+```bash
+git clone https://github.com/abdalrahmanbashir/my-awesome-token-dapp.git
+
+```
+```
+cd my-awesome-token-dapp
+```
+Compile and deploy the contract on your local network.
+
+#### Replace the contract address in the app.js file:
+##### const contractAddress = "YOUR_DEPLOYED_CONTRACT_ADDRESS";
+
+#### Install the http-server package:
+
+```bash
+npm install -g http-server
+```
+```
+cd frontend
+```
+#### Run the server:
+
+```bash
+http-server
 ```
