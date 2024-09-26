@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>My Awesome Token</title>
+  <link rel="stylesheet" href="styles.css">
+  <script src="https://cdn.jsdelivr.net/npm/ethers@5.6.9/dist/ethers.umd.min.js"></script>
+</head>
+<body>
+  <div class="dashboard">
+    <h1>My Awesome Token Dashboard</h1>
+
+    <!-- Account Information Section -->
+    <div class="container">
+      <div class="header">
+        <h2>Account Information</h2>
+      </div>
+      <div class="input-group">
+        <label for="account">Account Address</label>
+        <input type="text" id="account" readonly>
+      </div>
+      <div class="input-group">
+        <label for="balance">Token Balance</label>
+        <input type="text" id="balance" readonly>
+      </div>
+      <div class="input-group">
+        <label for="totalSupply">Total Supply</label>
+        <input type="text" id="totalSupply" readonly>
+      </div>
+    </div>
+
+    <!-- Transfer Section -->
+    <div class="container" id="transfer-section">
+      <div class="section-title">Transfer Tokens</div>
+      <div class="input-group">
+        <label for="recipient">Recipient Address</label>
+        <input type="text" id="recipient" placeholder="Enter recipient address">
+      </div>
+      <div class="input-group">
+        <label for="amount">Amount to Transfer</label>
+        <input type="text" id="amount" placeholder="Enter amount">
+      </div>
+      <button id="transferBtn">Transfer Tokens</button>
+      <div class="transaction-details hidden" id="transfer-details"></div>
+    </div>
+
+    <!-- Approve Section -->
+    <div class="container" id="approve-section">
+      <div class="section-title">Approve Token Usage</div>
+      <div class="input-group">
+        <label for="spender">Spender Address</label>
+        <input type="text" id="spender" placeholder="Enter spender address">
+      </div>
+      <div class="input-group">
+        <label for="approveAmount">Amount to Approve</label>
+        <input type="text" id="approveAmount" placeholder="Enter amount">
+      </div>
+      <button id="approveBtn">Approve Tokens</button>
+      <div class="transaction-details hidden" id="approve-details"></div>
+    </div>
+
+    <!-- Allowance Section -->
+    <div class="container" id="allowance-section">
+      <div class="section-title">Check Token Allowance</div>
+      <div class="input-group">
+        <label for="ownerAddress">Owner Address</label>
+        <input type="text" id="ownerAddress" placeholder="Enter owner's address">
+      </div>
+      <div class="input-group">
+        <label for="spenderCheck">Spender Address</label>
+        <input type="text" id="spenderCheck" placeholder="Enter spender's address">
+      </div>
+      <button id="allowanceBtn">Check Allowance</button>
+      <div class="transaction-details hidden" id="allowance-details"></div>
+    </div>
+  </div>
+
+  <script src="app.js"></script>
+</body>
+</html>
