@@ -11,11 +11,14 @@
   <div class="dashboard">
     <h1>My Awesome Token Dashboard</h1>
 
+    <!-- MetaMask Address Display -->
+    <div id="metamask-address" class="container">
+          <button id="connect-btn">Connect to MetaMask</button>
+    </div>
+
     <!-- Account Information Section -->
     <div class="container">
-      <div class="header">
         <h2>Account Information</h2>
-      </div>
       <div class="input-group">
         <label for="account">Account Address</label>
         <input type="text" id="account" readonly>
@@ -32,7 +35,7 @@
 
     <!-- Transfer Section -->
     <div class="container" id="transfer-section">
-      <div class="section-title">Transfer Tokens</div>
+      <h2>Transfer Tokens</h2>
       <div class="input-group">
         <label for="recipient">Recipient Address</label>
         <input type="text" id="recipient" placeholder="Enter recipient address">
@@ -45,9 +48,25 @@
       <div class="transaction-details hidden" id="transfer-details"></div>
     </div>
 
+     <!-- Token Minting Section -->
+    <div class="container">
+      <h2>Mint New Tokens</h2>
+      <div class="input-group">
+      <label for="mintAddress">Recipient Address:</label>
+      <input type="text" id="mintAddress" placeholder="0xRecipientAddress" />
+    </div>
+    <div class="input-group">
+      <label for="mintAmount">Amount (in Tokens):</label>
+      <input type="text" id="mintAmount" placeholder="Enter amount">
+      <button id="mintButton">Mint Tokens</button>
+    </div>
+      <div id="mint-status"></div>
+    </div>
+
+
     <!-- Approve Section -->
     <div class="container" id="approve-section">
-      <div class="section-title">Approve Token Usage</div>
+      <h2>Approve Token Usage</h2>
       <div class="input-group">
         <label for="spender">Spender Address</label>
         <input type="text" id="spender" placeholder="Enter spender address">
@@ -57,12 +76,12 @@
         <input type="text" id="approveAmount" placeholder="Enter amount">
       </div>
       <button id="approveBtn">Approve Tokens</button>
-      <div class="transaction-details hidden" id="approve-details"></div>
+      <div id="approve-status"></div>
     </div>
 
     <!-- Allowance Section -->
     <div class="container" id="allowance-section">
-      <div class="section-title">Check Token Allowance</div>
+      <h2">Check Token Allowance</h2>
       <div class="input-group">
         <label for="ownerAddress">Owner Address</label>
         <input type="text" id="ownerAddress" placeholder="Enter owner's address">

@@ -1,4 +1,4 @@
-const contractAddress = "0x23A48ccb8287f4c7C4E930Bf73Ef7fd1F2E58EeF"; // Replace with the actual contract address
+const contractAddress = "0x95F51fE3470A94483eb9DEd66F3AD546A9BF6f2d"; // Replace with your actual contract address
 const contractABI = [
   "function name() view returns (string)",
   "function symbol() view returns (string)",
@@ -7,11 +7,38 @@ const contractABI = [
   "function approve(address spender, uint256 amount) returns (bool)",
   "function totalSupply() view returns (uint256)",
   "function allowance(address owner, address spender) view returns (uint256)",
+  "function mint(address to, uint256 amount) returns (bool)", // Include mint function
 ];
 
 let provider;
 let signer;
 let contract;
+
+// Ensure DOM is fully loaded before adding event listeners
+window.addEventListener("DOMContentLoaded", function () {
+  // MetaMask connection
+  document
+    .getElementById("connect-btn")
+    .addEventListener("click", connectMetaMask);
+
+  // Token transfer
+  document
+    .getElementById("transferBtn")
+    .addEventListener("click", transferTokens);
+
+  // Token approval
+  document
+    .getElementById("approveBtn")
+    .addEventListener("click", approveTokens);
+
+  // Check allowance
+  document
+    .getElementById("allowanceBtn")
+    .addEventListener("click", checkAllowance);
+
+  // Mint tokens
+  document.getElementById("mintButton").addEventListener("click", mintTokens);
+});
 
 async function connectMetaMask() {
   if (window.ethereum) {
@@ -25,9 +52,8 @@ async function connectMetaMask() {
       getBalance(account);
       getTotalSupply();
     } catch (error) {
-      console.error(
-        "User denied account access or there was an issue with MetaMask",
-        error
+      alert(
+        "User denied account access or there was an issue with MetaMask" + error
       );
     }
   } else {
@@ -85,6 +111,10 @@ async function transferTokens() {
 async function approveTokens() {
   const spender = document.getElementById("spender").value;
   const amount = document.getElementById("approveAmount").value;
+  const statusElement = document.getElementById("approve-status"); // Add an element to display status
+
+  // Clear previous status
+  statusElement.innerText = "";
 
   if (!spender || !amount) {
     alert("Please fill in both spender and amount fields.");
@@ -92,12 +122,24 @@ async function approveTokens() {
   }
 
   const amountInWei = ethers.utils.parseEther(amount);
+
   try {
+    // Display that approval is in progress
+    statusElement.innerText = "Approval in progress...";
+
     const tx = await contract.approve(spender, amountInWei);
-    displayTransactionDetails(tx, "approve-details");
+
+    // Wait for the transaction to be mined
     await tx.wait();
+
+    // Display success status
+    statusElement.innerText = `Successfully approved ${amount} tokens for ${spender}`;
+    //displayTransactionDetails(tx, "approve-details");
   } catch (error) {
+    // If the approval fails, display an error status
     console.error("Approval failed", error);
+    statusElement.innerText =
+      "Approval failed. Only the contract owner can approve tokens.";
   }
 }
 
@@ -118,12 +160,36 @@ async function checkAllowance() {
   }
 }
 
-document
-  .getElementById("transferBtn")
-  .addEventListener("click", transferTokens);
-document.getElementById("approveBtn").addEventListener("click", approveTokens);
-document
-  .getElementById("allowanceBtn")
-  .addEventListener("click", checkAllowance);
+// Mint new tokens
+async function mintTokens() {
+  const recipient = document.getElementById("mintAddress").value;
+  const amount = document.getElementById("mintAmount").value;
+  const statusElement = document.getElementById("mint-status");
 
-connectMetaMask();
+  // Clear previous status
+  statusElement.innerText = "";
+
+  if (!recipient || !amount) {
+    alert("Please provide both recipient address and amount.");
+    statusElement.innerText =
+      "Please provide both recipient address and amount.";
+    return;
+  }
+
+  // Update status to indicate minting process has started
+  statusElement.innerText = "Minting in progress...";
+
+  try {
+    // Mint tokens, ensuring correct decimals are parsed
+    const tx = await contract.mint(
+      recipient,
+      ethers.utils.parseUnits(amount, 18)
+    );
+    await tx.wait(); // Wait for the transaction to be mined
+    statusElement.innerText = `Successfully minted ${amount} tokens to ${recipient}`;
+  } catch (error) {
+    console.error("Error minting tokens:", error);
+    statusElement.innerText =
+      "Minting failed. Only the contract owner can mint tokens.";
+  }
+}
